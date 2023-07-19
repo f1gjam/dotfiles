@@ -1,0 +1,20 @@
+[user]
+  name = Kashif
+  email = kashif@somewhere
+[core]
+  editor = nano
+  excludesfile = ~/.gitignore
+  autocrlf = input
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+[init]
+  defaultBranch = dev
+[web]
+  browser = google-chrome
+[credential]
+  helper = osxkeychain
+[push]
+  default = simple

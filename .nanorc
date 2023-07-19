@@ -1,0 +1,3 @@
+# BEGIN ANSIBLE MANAGED BLOCK
+include /usr/local/share/nano/*.nanorc
+# END ANSIBLE MANAGED BLOCK
