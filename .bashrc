@@ -5,6 +5,9 @@ export HISTFILESIZE=9999
 export HISTSIZE=9999
 export HISTTIMEFORMAT="%d-%m-%Y:%T "
 
+shopt -s histappend
+export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
+
 # Aliases
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
