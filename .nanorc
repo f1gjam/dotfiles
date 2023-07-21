@@ -1,3 +1,7 @@
 # BEGIN ANSIBLE MANAGED BLOCK
 include /opt/homebrew/share/nanorc/*.nanorc
+set linenumbers
+set tabsize 4
+set tabstospaces
+unset mouse
 # END ANSIBLE MANAGED BLOCK
