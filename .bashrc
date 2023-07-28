@@ -3,7 +3,7 @@
 
 export HISTFILESIZE=9999
 export HISTSIZE=9999
-export HISTTIMEFORMAT="%d-%m-%Y:%T "
+export HISTTIMEFORMAT="%d-%m-%y:%T "
 
 shopt -s histappend
 export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
