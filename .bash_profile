@@ -52,3 +52,4 @@ function parse_git_dirty {
 export PS1="\[$(tput setaf 34)\]\u\[$(tput setaf 15)\]@\[$(tput setaf 178)\]\h \[$(tput setaf 33)\]\w \[$(tput sgr0)\]\`parse_git_branch\`$ "
 
 export PATH=/opt/homebrew/bin:$PATH
+export GOROOT="$(brew --prefix golang)/libexec"
