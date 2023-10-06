@@ -1,0 +1,20 @@
+Host 34.219.17.172
+    HostName 34.219.17.172
+    User ec2-user
+    Port 22
+    IdentityFile ~/.ssh/cost_ssh.txt
+
+Host Bitbucket
+    HostName bitbucket.org
+    User kashif.ali@anywhere.re
+    Port 22
+    IdentityFile ~/.ssh/id_dsa
+
+Host *
+    IdentityFile ~/.ssh/id_dsa
+
+
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_dsa
