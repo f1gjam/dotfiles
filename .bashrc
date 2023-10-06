@@ -1,8 +1,8 @@
 # Generated with bashrc generator: https://alexbaranowski.github.io/bash-rc-generator/
 # History Settings
 
-export HISTFILESIZE=9999
-export HISTSIZE=9999
+export HISTFILESIZE=999999
+export HISTSIZE=999999
 export HISTTIMEFORMAT="%d-%m-%y:%T "
 
 shopt -s histappend
