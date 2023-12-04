@@ -53,3 +53,4 @@ export PS1="\[$(tput setaf 34)\]\u\[$(tput setaf 15)\]@\[$(tput setaf 178)\]\h \
 
 export PATH=/opt/homebrew/bin:$PATH
 export GOROOT="$(brew --prefix golang)/libexec"
+eval "$(saml2aws --completion-script-bash)"
