@@ -16,3 +16,5 @@ hash colordiff &> /dev/null && alias diff='colordiff'
 # Extra options
 
 export EDITOR="nano"
+
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
