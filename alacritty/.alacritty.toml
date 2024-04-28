@@ -1,0 +1,24 @@
+
+
+[window]
+
+opacity = 1.0 
+
+[scrolling]
+history = 100000
+
+[font]
+normal.family = "JetBrainsMono NFP"
+size = 12
+
+[colors]
+
+[cursor]
+style.shape = "Block"
+style.blinking = "Always"
+blink_interval = 300
+blink_timeout = 0
+unfocused_hollow = true
+
+[selection]
+save_to_clipboard = true

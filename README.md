@@ -17,3 +17,4 @@ stow git
 stow nano
 stow osx
 stow ssh (may need --adopt)
+stow alacritty
