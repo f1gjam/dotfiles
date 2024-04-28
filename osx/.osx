@@ -116,7 +116,7 @@ defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
 # Finder: show hidden files by default
-# defaults write com.apple.finder AppleShowAllFiles -bool true
+defaults write com.apple.finder AppleShowAllFiles -bool true
 
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -265,3 +265,11 @@ if [[ ! ($* == *--no-restart*) ]]; then
 fi
 
 printf "Please log out and log back in to make all settings take effect.\n"
+
+
+
+
+256 ###############################################################################
+257 # STOP Annoucing the Time                                                     #
+258 ###############################################################################
+defaults write com.apple.speech.synthesis.general.prefs TimeAnnouncementPrefs -dict-add TimeAnnouncementsEnabled -bool false
