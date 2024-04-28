@@ -1,12 +1,12 @@
-# Generated with bashrc generator: https://alexbaranowski.github.io/bash-rc-generator/
+\# Generated with bashrc generator: https://alexbaranowski.github.io/bash-rc-generator/
 # History Settings
 
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 export HISTFILESIZE=999999
 export HISTSIZE=999999
 export HISTTIMEFORMAT="%d-%m-%y:%T "
 
 shopt -s histappend
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Aliases
 alias grep='grep --color=auto'
@@ -67,10 +67,14 @@ function parse_git_dirty {
 }
 
 
-export PS1="\[$(tput setaf 34)\]\u\[$(tput setaf 15)\]@\[$(tput setaf 178)\]\h \[$(tput setaf 33)\]\w \[$(tput sgr0)\]\`parse_git_branch\`$ "
+export PS1="\[$(tput setaf 34)\]\u\[$(tput setaf 15)\]@\[$(tput setaf 178)\]\h\[$(tput setaf 33)\]:\w:\[$(tput sgr0)\]\`parse_git_branch\`> "
+
+
 
 export PATH=/opt/homebrew/bin:$PATH
 export GOROOT="$(brew --prefix golang)/libexec"
 eval "$(saml2aws --completion-script-bash)"
 #Need the below so you dont get ssl errors from aws cli
 export AWS_CA_BUNDLE=$(brew --prefix)/etc/ca-certificates/cert.pem
+
+
