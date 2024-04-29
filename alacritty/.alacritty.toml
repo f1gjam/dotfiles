@@ -1,6 +1,5 @@
-
-
 [window]
+option_as_alt = "OnlyLeft"
 
 opacity = 1.0 
 
