@@ -69,6 +69,7 @@ export EDITOR="nano"
 
 
 export PATH=/opt/homebrew/bin:$PATH
+export PATH=/opt/homebrew/sbin:$PATH
 export GOROOT="$(brew --prefix golang)/libexec"
 eval "$(saml2aws --completion-script-bash)"
 
