@@ -7,27 +7,27 @@
 [username]
 style_user = "green bold"
 style_root = "red bold"
-format = "[$user]($style) "
+format = "[$user]($style)"
 disabled = false
 show_always = true
 
 [hostname]
 ssh_only = false
-format = 'on [$hostname](bold yellow) '
+format = '@[$hostname](bold yellow) '
 trim_at = "."
 disabled = false
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character] # The name of the module we are configuring is "character"
-success_symbol = "[#>](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+success_symbol = "[#>](bold white)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
 error_symbol = "[x>](bold red)"
 #  
 # configure directory
 [directory]
 read_only = " "
-truncation_length = 10
-truncate_to_repo = true    # truncates directory to root folder if in github repo
-style = "bold italic blue"
+truncation_length = 0
+truncate_to_repo = false   # truncates directory to root folder if in github repo
+style = "bold italic cyan"
 
 [cmd_duration]
 min_time = 4
@@ -61,7 +61,7 @@ symbol = " "
 
 [git_branch]
 symbol = " "
-
+format = '[branch: $symbol$branch (:$remote_name)]($style)'
 
 [golang]
 symbol = " "
