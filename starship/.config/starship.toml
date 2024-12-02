@@ -1,9 +1,11 @@
-#format = """
-#[╭─user───❯](bold blue) $username
-#[┣─system─❯](bold yellow) $hostname
-#[┣─project❯](bold red) $directory$rust$git_branch$git_status$package$golang$terraform$docker_context$python$docker_context$nodejs
-#[╰─cmd────❯](bold green) 
-#"""
+# format = """
+# [╭─user───❯](bold blue) $username
+# [┣─system─❯](bold yellow) $hostname
+# [┣─project❯](bold red) $directory$rust$git_branch$git_status$package$golang$terraform$docker_context$python$docker_context$nodejs
+# [╰─cmd────❯](bold green) 
+# """
+
+
 [username]
 style_user = "green bold"
 style_root = "red bold"
@@ -33,7 +35,7 @@ style = "bold italic cyan"
 min_time = 4
 show_milliseconds = false
 disabled = false
-style = "bold italic red"
+style = " bold italic red"
 
 [aws]
 symbol = "  "
@@ -64,7 +66,9 @@ symbol = " "
 format = '[branch: $symbol$branch (:$remote_name)]($style)'
 
 [golang]
-symbol = " "
+symbol = ""
+style = "bg:#212736"
+format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style) '
 
 [hg_branch]
 symbol = " "
@@ -117,6 +121,12 @@ symbol = " "
 
 [swift]
 symbol = "ﯣ "
+
+[time]
+disabled = false
+time_format = "%R"                                      # Hour:Minute Format
+style = "bg:#1d2230"
+format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
 
 [nodejs]
 format = "via [ Node.js $version](bold green) "
