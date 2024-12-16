@@ -3,7 +3,7 @@
   email = kashif@somewhere
 [core]
   editor = nano
-#  excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
   autocrlf = input
 [color]
   branch = auto
