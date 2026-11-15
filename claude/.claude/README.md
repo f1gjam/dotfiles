@@ -6,7 +6,7 @@ Claude Code settings that apply to every project on this machine. The files here
 
 | Path | What it is | Source |
 | ---- | ---------- | ------ |
-| `CLAUDE.md` | Personal rules loaded in every session: Google Drive safety, Markdown for Google, facts and accuracy, text to paste elsewhere, engineering principles, diagrams. | Link to dotfiles |
+| `CLAUDE.md` | Personal rules loaded in every session: Google Drive safety, Markdown for Google, facts and accuracy, text to paste elsewhere, engineering principles, skills and their docs (every skill has a README, kept in step with CLAUDE.md and READMEs), diagrams. | Link to dotfiles |
 | `skills/` | Personal skills available everywhere (table below). | One link to `~/dotfiles/claude/.claude/skills/` |
 | `README.md` | This file. | Link to dotfiles |
 | `settings.json` | Machine settings. Not tracked in dotfiles. | Local |

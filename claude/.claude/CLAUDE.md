@@ -34,6 +34,13 @@
 - Goal-driven: know what "done" looks like and check it (run it, test it) before saying it works.
 - No sprawling hacks: if a fix needs workarounds piling up, stop and rethink, or ask.
 
+## Skills and their docs
+
+- Every skill (global or project) has a `README.md` in its folder beside `SKILL.md`: what it does, how to run it, inputs, outputs, and whether it writes anywhere (Jira, Drive, files).
+- When creating a skill, write its `README.md` in the same step.
+- When changing a skill (new or existing), update in the same step everything that describes it: its `README.md`, any `CLAUDE.md` that mentions it (project, parent folders, global), and any README that lists it (the folder README, `~/.claude/README.md`, `~/dotfiles/README.md`). Search for the skill's name to find them.
+- Global skills and docs hold nothing company-specific. Company skills and rules go in the company's folders.
+
 ## Diagrams
 
 - Graphviz diagrams are delivered as `.dot` and `.png` only. No SVG unless asked.
