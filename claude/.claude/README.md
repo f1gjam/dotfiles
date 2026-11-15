@@ -22,6 +22,10 @@ Each skill folder has its own `README.md`.
 | [`gdoc-markdown-compat`](skills/gdoc-markdown-compat/README.md) | Rules and lint checks for Markdown that must look right in Google Docs. | No |
 | [`jira-reply-tracker`](skills/jira-reply-tracker/README.md) | Finds Jira tickets where someone is waiting on your reply. | No (read-only) |
 
+## Shared with GitHub Copilot CLI
+
+The `copilot` package links `~/.copilot/copilot-instructions.md` to this `CLAUDE.md`, and Copilot's `settings.json` lists `~/.claude/skills` in `skillDirectories`. So Copilot uses the same rules and skills: write them so they make sense in both tools. See `~/.copilot/README.md`.
+
 ## Company-specific rules and skills
 
 Nothing company-specific belongs in this directory. Company rules and skills are kept outside it, in the company's own folders.

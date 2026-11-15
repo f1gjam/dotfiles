@@ -13,6 +13,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 |-------------|-----------------------------------------------|
 | `bash`      | `~/.bashrc`, `~/.bash_profile`                |
 | `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/README.md` (overview), `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`). Each skill folder has a `README.md`. |
+| `copilot`   | `~/.copilot/copilot-instructions.md` (a link to the `claude` package's `CLAUDE.md`, so both tools share one rules file), `~/.copilot/README.md`. Skills are not copied: Copilot reads `~/.claude/skills` through `skillDirectories` in its local `settings.json`. |
 | `ghostty`   | `~/.config/ghostty/config`                    |
 | `git`       | `~/.gitconfig`, `~/.gitignore` (needs `.stow-local-ignore`, see notes) |
 | `nano`      | `~/.nanorc`                                   |
@@ -77,6 +78,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 
    ```bash
    stow -nv claude && stow -v claude
+   stow -nv copilot && stow -v copilot   # needs claude stowed too; then set up settings.json, see ~/.copilot/README.md
    stow -nv ssh && stow -v ssh
    ```
 
@@ -157,6 +159,13 @@ cd ~/dotfiles && stow -v tmux
 - `~/.claude/skills` is a single link to the repo folder, so any skill added
   there appears at once. Other tools that write into `~/.claude/skills`
   will write into the repo.
+- `copilot/.copilot/copilot-instructions.md` is a relative link to
+  `claude/.claude/CLAUDE.md`. Edit `CLAUDE.md`; Copilot sees the change at
+  once. Stow `claude` as well, or the Copilot skills folder setting points
+  at nothing.
+- `~/.copilot/settings.json` is not tracked. The Copilot CLI rewrites it,
+  which would replace a stowed link. The settings to recreate are listed in
+  `copilot/.copilot/README.md`.
 - Nothing company-specific belongs in this repo. Company rules and skills are
   kept outside it.
 - `ssh` may need `--adopt` if `~/.ssh/config` already exists. Keep key files
