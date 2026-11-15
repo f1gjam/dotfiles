@@ -13,7 +13,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 |-------------|-----------------------------------------------|
 | `alacritty` | `~/.alacritty.toml`                           |
 | `bash`      | `~/.bashrc`, `~/.bash_profile`                |
-| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`; `llm-budget` is local only, see notes) |
+| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/README.md` (overview), `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`; `llm-budget` is local only, see notes). Each skill folder has a `README.md`. |
 | `ghostty`   | `~/.config/ghostty/config`                    |
 | `git`       | `~/.gitconfig`, `~/.gitignore` (needs `.stow-local-ignore`, see notes) |
 | `nano`      | `~/.nanorc`                                   |
