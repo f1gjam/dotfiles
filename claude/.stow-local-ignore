@@ -1,0 +1,23 @@
+# Replaces Stow's default ignore list, so the defaults are repeated here.
+# http://www.gnu.org/software/stow/manual/html_node/Types-And-Syntax-Of-Ignore-Lists.html
+
+RCS
+.+,v
+CVS
+\.\#.+
+\.cvsignore
+\.svn
+_darcs
+\.hg
+\.git
+\.gitignore
+\.gitmodules
+.+~
+\#.*\#
+^/README.*
+^/LICENSE.*
+^/COPYING
+
+# Company skill: not stowed and not in git (see ~/dotfiles/.gitignore).
+# ~/.claude/skills is one link to the repo folder, so it still shows up there.
+^/\.claude/skills/llm-budget

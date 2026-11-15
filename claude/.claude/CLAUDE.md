@@ -15,3 +15,29 @@
 - Short version: no raw HTML, no colour or underline, no `==highlight==`, no relative image links. Embed images as reference-style base64 (`![alt][image1]` with definitions at the end of the file). Mark warnings as `### ***TEXT***` (or `***TEXT***` in table cells).
 - Keep full-resolution PNG masters next to the document. Never round-trip images through Google, because it downscales them.
 - Run the lint checks in the skill before any upload.
+
+## Facts and accuracy
+
+- Never invent facts, owners, numbers or dates. If something isn't known, say so or ask.
+- Turn relative dates ("next Friday", "last week") into absolute dates.
+- When sources give conflicting facts and you can't tell which is right, ask rather than picking one.
+
+## Text to paste elsewhere
+
+- Text the user will paste somewhere else (Slack, review tools, emails, ticket comments) goes in one fenced code block, so `/copy` picks it up in one go.
+
+## Engineering principles
+
+- Think before coding: understand the problem and the existing code first, and state assumptions.
+- Simplicity first: the simplest solution that works. No speculative features or abstractions.
+- Surgical changes: touch only what the task needs. Don't reformat or refactor unrelated code.
+- Goal-driven: know what "done" looks like and check it (run it, test it) before saying it works.
+- No sprawling hacks: if a fix needs workarounds piling up, stop and rethink, or ask.
+
+## Diagrams
+
+- Graphviz diagrams are delivered as `.dot` and `.png` only. No SVG unless asked.
+
+## Work rules
+
+- Company (CIH) rules, including the DBX connectivity status update, live in `~/Dropbox/CIH/CLAUDE.md` and skills in `~/Dropbox/CIH/.claude/skills/`, not in this file.

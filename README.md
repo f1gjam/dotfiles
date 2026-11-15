@@ -13,7 +13,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 |-------------|-----------------------------------------------|
 | `alacritty` | `~/.alacritty.toml`                           |
 | `bash`      | `~/.bashrc`, `~/.bash_profile`                |
-| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`) |
+| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`; `llm-budget` is local only, see notes) |
 | `ghostty`   | `~/.config/ghostty/config`                    |
 | `git`       | `~/.gitconfig`, `~/.gitignore` (needs `.stow-local-ignore`, see notes) |
 | `nano`      | `~/.nanorc`                                   |
@@ -158,8 +158,11 @@ cd ~/dotfiles && stow -v tmux
 - `~/.claude/skills` is a single link to the repo folder, so any skill added
   there appears at once. Other tools that write into `~/.claude/skills`
   will write into the repo.
-- `~/.claude/llm-budget` is a link to `~/.ai/skills/llm-budget`, made outside
-  Stow, and is not in this repo.
+- `llm-budget` lives in `claude/.claude/skills/llm-budget/` but is a company
+  skill, so it is in `~/dotfiles/.gitignore` (not pushed) and in
+  `claude/.stow-local-ignore` (not stowed on its own). It still appears in
+  Claude Code because `~/.claude/skills` links to the whole folder.
+- Company (CIH) skills and rules live in `~/Dropbox/CIH/`, not in this repo.
 - `settings.json` and `settings.local.json` are not tracked, because they differ
   per machine and company.
 - `ssh` may need `--adopt` if `~/.ssh/config` already exists. Keep key files
