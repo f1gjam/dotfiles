@@ -11,9 +11,8 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 
 | Package     | Links to                                      |
 |-------------|-----------------------------------------------|
-| `alacritty` | `~/.alacritty.toml`                           |
 | `bash`      | `~/.bashrc`, `~/.bash_profile`                |
-| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/README.md` (overview), `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`; `llm-budget` is local only, see notes). Each skill folder has a `README.md`. |
+| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/README.md` (overview), `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`). Each skill folder has a `README.md`. |
 | `ghostty`   | `~/.config/ghostty/config`                    |
 | `git`       | `~/.gitconfig`, `~/.gitignore` (needs `.stow-local-ignore`, see notes) |
 | `nano`      | `~/.nanorc`                                   |
@@ -61,7 +60,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 3. Preview what Stow will do. Nothing is changed:
 
    ```bash
-   stow -nv bash git nano osx alacritty starship ghostty
+   stow -nv bash git nano osx starship ghostty
    ```
 
    - No output or only `LINK:` lines: safe to continue.
@@ -71,7 +70,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 4. Stow for real:
 
    ```bash
-   stow -v bash git nano osx alacritty starship ghostty
+   stow -v bash git nano osx starship ghostty
    ```
 
 5. Optional packages. Preview each with `-nv` first:
@@ -122,7 +121,7 @@ To pull changes from another machine:
 ```bash
 cd ~/dotfiles
 git pull
-stow -R bash git nano osx alacritty starship ghostty   # only needed if files were added or moved
+stow -R bash git nano osx starship ghostty   # only needed if files were added or moved
 ```
 
 To add a new config, for example `tmux`:
@@ -158,12 +157,7 @@ cd ~/dotfiles && stow -v tmux
 - `~/.claude/skills` is a single link to the repo folder, so any skill added
   there appears at once. Other tools that write into `~/.claude/skills`
   will write into the repo.
-- `llm-budget` lives in `claude/.claude/skills/llm-budget/` but is a company
-  skill, so it is in `~/dotfiles/.gitignore` (not pushed) and in
-  `claude/.stow-local-ignore` (not stowed on its own). It still appears in
-  Claude Code because `~/.claude/skills` links to the whole folder.
-- Company (CIH) skills and rules live in `~/Dropbox/CIH/`, not in this repo.
-- `settings.json` and `settings.local.json` are not tracked, because they differ
-  per machine and company.
+- Nothing company-specific belongs in this repo. Company rules and skills are
+  kept outside it.
 - `ssh` may need `--adopt` if `~/.ssh/config` already exists. Keep key files
   out of this repo.

@@ -21,11 +21,10 @@ Each skill folder has its own `README.md`.
 | [`gdrive-sync`](skills/gdrive-sync/README.md) | Push, pull or compare a local file with an existing Google Drive file, with conflict checks and backups. | Drive, only after you say yes |
 | [`gdoc-markdown-compat`](skills/gdoc-markdown-compat/README.md) | Rules and lint checks for Markdown that must look right in Google Docs. | No |
 | [`jira-reply-tracker`](skills/jira-reply-tracker/README.md) | Finds Jira tickets where someone is waiting on your reply. | No (read-only) |
-| [`llm-budget`](skills/llm-budget/README.md) | Shows your Compass LLM proxy budget. Company skill: git-ignored, never pushed. | No |
 
-## Not here
+## Company-specific rules and skills
 
-Company (CIH) rules and skills (`qualys`, `wiz`, `dbx-connectivity-status`, the Srini weekly-update commands) live in `~/Dropbox/CIH/` and load when Claude is started anywhere under that folder. See `~/Dropbox/CIH/README.md`.
+Nothing company-specific belongs in this directory. Company rules and skills are kept outside it, in the company's own folders.
 
 ## Adding a skill
 
