@@ -21,6 +21,7 @@ Each skill folder has its own `README.md`.
 | [`gdrive-sync`](skills/gdrive-sync/README.md) | Push, pull or compare a local file with an existing Google Drive file, with conflict checks and backups. | Drive, only after you say yes |
 | [`gdoc-markdown-compat`](skills/gdoc-markdown-compat/README.md) | Rules and lint checks for Markdown that must look right in Google Docs. | No |
 | [`jira-reply-tracker`](skills/jira-reply-tracker/README.md) | Finds Jira tickets where someone is waiting on your reply. | No (read-only) |
+| [`graphviz-diagrams`](skills/graphviz-diagrams/README.md) | Makes Graphviz diagrams as a fully commented `.dot` plus a `.png`. | `.dot` and `.png` files only |
 
 ## Shared with GitHub Copilot CLI
 

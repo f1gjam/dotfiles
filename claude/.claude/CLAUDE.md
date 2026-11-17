@@ -44,6 +44,7 @@
 ## Diagrams
 
 - Graphviz diagrams are delivered as `.dot` and `.png` only. No SVG unless asked.
+- Every `.dot` file must be fully commented (header, settings, clusters, nodes, edges, styles). Use the `graphviz-diagrams` skill for any Graphviz work.
 
 ## Work rules
 

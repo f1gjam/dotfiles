@@ -12,7 +12,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 | Package     | Links to                                      |
 |-------------|-----------------------------------------------|
 | `bash`      | `~/.bashrc`, `~/.bash_profile`                |
-| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/README.md` (overview), `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`). Each skill folder has a `README.md`. |
+| `claude`    | `~/.claude/CLAUDE.md`, `~/.claude/README.md` (overview), `~/.claude/skills/` (`gdrive-sync`, `gdoc-markdown-compat`, `jira-reply-tracker`, `graphviz-diagrams`). Each skill folder has a `README.md`. |
 | `copilot`   | `~/.copilot/copilot-instructions.md` (a link to the `claude` package's `CLAUDE.md`, so both tools share one rules file), `~/.copilot/README.md`, `~/.copilot/statusline.sh` (Copilot's own status line). Skills are not copied: Copilot reads `~/.claude/skills` through `skillDirectories` in its local `settings.json`. |
 | `ghostty`   | `~/.config/ghostty/config`                    |
 | `git`       | `~/.gitconfig`, `~/.gitignore` (needs `.stow-local-ignore`, see notes) |
