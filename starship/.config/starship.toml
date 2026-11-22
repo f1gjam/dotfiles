@@ -5,6 +5,7 @@
 # [╰─cmd────❯](bold green) 
 # """
 
+command_timeout = 2000
 
 [username]
 style_user = "green bold"
