@@ -9,6 +9,12 @@
 - Keep backups in a `drive-sync-backups/` folder beside the document, not in `$TMPDIR` (it is cleared on reboot).
 - Never print or store gcloud access tokens.
 
+## Markdown formatting (every .md file)
+
+- After writing or editing any Markdown file, run the `markdown-format-check` skill's script on it and fix everything it reports before saying the task is done. Use `--allow-html` for files with red review spans and `--slack` for files going to Slack or Google.
+- Escape every dollar sign as `\$` outside code. Two plain `$` on one line render as LaTeX math in many viewers and run the words together.
+- When copying text from another file, keep its escaping and match the text around it.
+
 ## Markdown that goes to Google
 
 - When writing or editing any Markdown that will be uploaded to or shared through Google Drive, follow the `gdoc-markdown-compat` skill.

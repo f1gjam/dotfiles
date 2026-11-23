@@ -30,7 +30,7 @@ Rules so a Markdown file looks the same in Google as it does locally. The aim is
 | Relative image links `![](file.png)` | Drive cannot resolve paths on the author's disk | Embedded images (below) |
 | Remote image URLs you do not control | Break when the link dies or needs login | Embedded images |
 | Footnotes `[^1]`, task lists `- [ ]`, definition lists, math, emoji shortcodes `:warning:` | Not verified in Google. Treat as unsupported until tested. | Plain text and tables |
-| Hand-written escapes (`\.`, `\=`), `&nbsp;` padding | Google's exporter adds these itself. Writing them by hand clutters the source. | Plain text |
+| Hand-written escapes (`\.`, `\=`), `&nbsp;` padding | Google's exporter adds these itself. Writing them by hand clutters the source. | Plain text. Exception: always write `$` as `\$` (unescaped pairs render as math; Google's export does the same) |
 | The same image twice (relative link plus embedded) | Shows twice or broken in Drive | One embedded reference only |
 
 ## Warnings and callouts (no colour available)
@@ -112,6 +112,6 @@ A file round-tripped through Google shows: `\.` and `\=` escapes (`## 1\. Summar
 
 1. Write or edit using the safe subset only.
 2. Embed images from the PNG masters.
-3. Run the lint block and fix findings.
+3. Run the lint block and the `markdown-format-check` script with `--slack`, and fix findings.
 4. For sync to Drive, hand off to the **gdrive-sync** skill. It asks before uploading.
 5. After upload, tell the user what was not verified: how Drive's viewer actually renders headings, emoji, tables and images. Ask them to open the link and confirm.

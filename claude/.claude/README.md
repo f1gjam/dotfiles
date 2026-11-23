@@ -6,7 +6,7 @@ Claude Code settings that apply to every project on this machine. The files here
 
 | Path | What it is | Source |
 | ---- | ---------- | ------ |
-| `CLAUDE.md` | Personal rules loaded in every session: Google Drive safety, Markdown for Google, facts and accuracy, text to paste elsewhere, engineering principles, skills and their docs (every skill has a README, kept in step with CLAUDE.md and READMEs), diagrams. | Link to dotfiles |
+| `CLAUDE.md` | Personal rules loaded in every session: Google Drive safety, Markdown formatting check, Markdown for Google, facts and accuracy, text to paste elsewhere, engineering principles, skills and their docs (every skill has a README, kept in step with CLAUDE.md and READMEs), diagrams. | Link to dotfiles |
 | `skills/` | Personal skills available everywhere (table below). | One link to `~/dotfiles/claude/.claude/skills/` |
 | `README.md` | This file. | Link to dotfiles |
 | `settings.json` | Machine settings. Not tracked in dotfiles. | Local |
@@ -20,7 +20,9 @@ Each skill folder has its own `README.md`.
 | ----- | ------------ | ---------------- |
 | [`gdrive-sync`](skills/gdrive-sync/README.md) | Push, pull or compare a local file with an existing Google Drive file, with conflict checks and backups. | Drive, only after you say yes |
 | [`gdoc-markdown-compat`](skills/gdoc-markdown-compat/README.md) | Rules and lint checks for Markdown that must look right in Google Docs. | No |
+| [`markdown-format-check`](skills/markdown-format-check/README.md) | Checks any Markdown file for formatting mistakes (unescaped `$`, broken bold, bad tables, headings, review spans, HTML left in Slack files). Run after every Markdown edit. | No (read-only) |
 | [`jira-reply-tracker`](skills/jira-reply-tracker/README.md) | Finds Jira tickets where someone is waiting on your reply. | No (read-only) |
+| [`jira-create`](skills/jira-create/README.md) | Creates a Jira issue: asks for assignee, epic, description and acceptance criteria, writes the title, checks spelling and grammar, shows the draft for approval. | Jira, only after you approve the draft |
 | [`graphviz-diagrams`](skills/graphviz-diagrams/README.md) | Makes Graphviz diagrams as a fully commented `.dot` plus a `.png`. | `.dot` and `.png` files only |
 
 ## Shared with GitHub Copilot CLI
