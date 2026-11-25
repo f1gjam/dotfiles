@@ -8,6 +8,8 @@ Creates a Jira issue after asking you for the details.
 
 **Inputs:** your answers. Jira rules (site, default project, required components, team list) come from the `CLAUDE.md` files of the folder you run it in, so company-specific details stay out of this skill.
 
+**Needs:** the Atlassian MCP server connected to Claude Code and signed in to your Atlassian site (check with `/mcp`). Nothing to install on the machine.
+
 **Writes:** Jira only: one new issue, plus a status change and any field fix-ups on that issue. Nothing is written until you approve the draft.
 
 | File | Purpose |

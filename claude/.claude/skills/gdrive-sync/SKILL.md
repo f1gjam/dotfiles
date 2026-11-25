@@ -15,24 +15,29 @@ Scope: **uploaded files** (`.md`, `.txt`, `.csv`, `.pdf`, ...). Native Google Do
 - **Never change sharing.** No permission create/update/delete calls, ever. Never delete files, comments or revisions.
 - **Always update the existing file ID** (PATCH). Never create a new file to "replace" one: that changes the link and loses sharing.
 - **Never print the access token** or put it in a file. Keep it inside the command.
+- **Use the `gws` CLI (googleworkspace-cli) for every Drive call. Do not use `curl`.** Do not use `gws drive +upload`: it is a helper that sets metadata (name, parents). Use `gws drive files update --upload` only.
 - Do not put the user's name, email, project or file contents into any request except to Google's own Drive API for the file they named.
 - Report outcomes faithfully. If a check fails or was skipped, say so.
 
 ## Environment notes
 
 - Shell state does not persist between Bash calls: redefine the variables in every call.
-- `gcloud` writes to `~/.config/gcloud`, which the sandbox blocks. Run gcloud-using commands with `dangerouslyDisableSandbox: true` and tell the user why. Mention `/sandbox` if relevant.
+- Needs the Google Workspace CLI: `command -v gws` must work and `gws --version` must start `gws 0.` from googleworkspace-cli (https://github.com/googleworkspace/cli). A different `gws` exists (a git-workspace tool in Homebrew, whose output is "Not in a workspace"): if you see that, stop and tell the user.
+- `gws` and `gcloud` write under `~/.config`, which the sandbox blocks (`discoveryError: Operation not permitted`). Run gws/gcloud commands with `dangerouslyDisableSandbox: true` and tell the user why. Mention `/sandbox` if relevant.
+- Auth: `gws` takes the `gcloud` access token from `GOOGLE_WORKSPACE_CLI_TOKEN`. Set it inline in every call (see preamble); there is no `gws-auth` function to rely on.
+- `GOOGLE_APPLICATION_CREDENTIALS=/dev/null` stops `gws` reading a quota project from ADC, which causes "API not enabled" errors. Keep it. It replaces the old quota-project header.
 - Needs Drive scope. If a call returns `ACCESS_TOKEN_SCOPE_INSUFFICIENT`, tell the user to run `! gcloud auth login --enable-gdrive-access`. If `Reauthentication failed`, tell them to run `! gcloud auth login`. If the organisation blocks the scope, say so and offer manual export/paste instead; do not hunt for other credentials.
-- Billing/quota project: use the user's active one (`gcloud config get-value project`), do not hardcode.
+- Always pass `"supportsAllDrives": true` in `--params` where the method accepts it, or Shared Drive files return 404. `comments list` and `revisions list` have no such parameter and must not get it.
+- `gws` prints `Using keyring backend: keyring` before its JSON. Strip any line before the first `{` when saving JSON, or send stderr to `/dev/null` when the call succeeded.
+- `--dry-run` validates a call locally and sends nothing. Use it to check the URL and method before any write.
+- `--page-all` prints one JSON line per page (NDJSON) and stops at 10 pages by default: pass `--page-limit 100` and save as `.ndjson`.
 
 Common preamble (repeat in each call):
 
 ```bash
 ID=<fileId>
-TOKEN=$(gcloud auth print-access-token 2>/dev/null)
-PROJECT=$(gcloud config get-value project 2>/dev/null)
-H=(-H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: $PROJECT")
-API="https://www.googleapis.com/drive/v3/files/$ID"
+export GOOGLE_WORKSPACE_CLI_TOKEN=$(gcloud auth print-access-token 2>/dev/null)
+export GOOGLE_APPLICATION_CREDENTIALS=/dev/null
 ```
 
 ## State: sidecar file per document
@@ -62,7 +67,7 @@ For each local doc keep `<doc>.drive.json` next to it (syncs with Dropbox):
 
 ### 2. Preflight (read only)
 ```bash
-curl -s "${H[@]}" "$API?fields=id,name,mimeType,version,md5Checksum,modifiedTime,size,shared,capabilities(canEdit)&supportsAllDrives=true"
+gws drive files get --params "{\"fileId\":\"$ID\",\"supportsAllDrives\":true,\"fields\":\"id,name,mimeType,version,md5Checksum,modifiedTime,size,shared,capabilities(canEdit)\"}"
 ```
 - Stop if `mimeType` starts with `application/vnd.google-apps.` (native Google file).
 - Stop if `capabilities.canEdit` is false.
@@ -75,11 +80,12 @@ Compare Drive `md5Checksum` with the sidecar's `md5Checksum`.
 
 ### 4. Snapshot (read only, saved locally before touching Drive)
 Save to `drive-sync-backups/`, timestamped (`<doc>.<YYYYMMDD-HHMMSS>.*`):
-- **Content:** download of the current Drive file: `curl -s "${H[@]}" "$API?alt=media&supportsAllDrives=true" -o ...` and confirm its md5 matches Drive's.
-- **Comments:** paginate until no `nextPageToken`:
-  `$API/comments?fields=nextPageToken,comments(id,author(displayName,emailAddress),content,createdTime,resolved,deleted,anchor,quotedFileContent(value),replies(author(displayName),content,createdTime,deleted))&includeDeleted=true&pageSize=100`
-- **Permissions:** `$API/permissions?fields=permissions(id,type,role,emailAddress,domain,allowFileDiscovery)&supportsAllDrives=true`
-- **Revisions:** `$API/revisions?fields=revisions(id,modifiedTime,keepForever,size)`
+- **Content:** download of the current Drive file, then confirm its md5 matches Drive's `md5Checksum`:
+  `gws drive files get --params "{\"fileId\":\"$ID\",\"alt\":\"media\",\"supportsAllDrives\":true}" -o <backup path>`
+- **Comments:** `--page-all` follows `nextPageToken` for you (NDJSON, one page per line; save as `.ndjson`):
+  `gws drive comments list --page-all --page-limit 100 --params "{\"fileId\":\"$ID\",\"includeDeleted\":true,\"pageSize\":100,\"fields\":\"nextPageToken,comments(id,author(displayName,emailAddress),content,createdTime,resolved,deleted,anchor,quotedFileContent(value),replies(author(displayName),content,createdTime,deleted))\"}"`
+- **Permissions:** `gws drive permissions list --params "{\"fileId\":\"$ID\",\"supportsAllDrives\":true,\"fields\":\"permissions(id,type,role,emailAddress,domain,allowFileDiscovery)\"}"`
+- **Revisions:** `gws drive revisions list --params "{\"fileId\":\"$ID\",\"fields\":\"revisions(id,modifiedTime,keepForever,size)\"}"`
 
 ### 5. Ask before uploading
 Use AskUserQuestion. Show, in the question text: local file, size and md5; Drive name, current version and size; what changed vs the last synced version (short diff summary); number of open and resolved comments (from the snapshot); who has access (from the snapshot, names only as needed). Options: **Upload now**, **Show full diff first**, **Cancel**.
@@ -87,19 +93,22 @@ Use AskUserQuestion. Show, in the question text: local file, size and md5; Drive
 If there are existing comments, warn that for uploaded files Drive may keep a comment but lose its highlighted anchor, and that the snapshot has the full text. Do not claim comments will definitely survive.
 
 Also ask, as a separate question, whether to pin the current Drive revision (`keepForever`) before overwriting, because unpinned revisions can be deleted after about 30 days. Pin only if they say yes:
-`curl -s -X PATCH "${H[@]}" -H "Content-Type: application/json" -d '{"keepForever":true}' "$API/revisions/<revisionId>"`
+`gws drive revisions update --params "{\"fileId\":\"$ID\",\"revisionId\":\"<revisionId>\"}" --json '{"keepForever":true}'`
 
 ### 6. Upload (only after yes)
 ```bash
-curl -s -X PATCH "${H[@]}" -H "Content-Type: <existing mimeType>" \
-  --data-binary @"<local file>" \
-  "https://www.googleapis.com/upload/drive/v3/files/$ID?uploadType=media&supportsAllDrives=true&fields=id,name,version,md5Checksum,size"
+gws drive files update \
+  --params "{\"fileId\":\"$ID\",\"supportsAllDrives\":true,\"fields\":\"id,name,version,md5Checksum,size\"}" \
+  --upload "<local file>" --upload-content-type "<existing mimeType>"
 ```
-- Use the file's existing `mimeType`. Do not send a metadata body, so the name and parents stay unchanged.
-- Files over about 5 MB: use `uploadType=resumable` instead.
+- Run the same command with `--dry-run` first. It must show `PATCH` on `.../upload/drive/v3/files/<the file ID>`, `"body": null` and `is_multipart_upload: true`. Anything else: stop.
+- Always pass `--upload-content-type` with the file's existing `mimeType` (do not let `gws` guess from the extension). Do not pass `--json`, so the name and parents stay unchanged.
+- Verify in step 7 that the returned `name` equals the name from the preflight.
+- Large files: `gws` handles the upload itself. If a big upload fails, report it and check Drive's version before retrying.
 
 ### 7. Verify
 - New Drive `md5Checksum` equals the local md5. If not, report a failed sync and do not update the sidecar.
+- Returned `name` equals the preflight name (the upload must not rename the file). If it changed, report it loudly.
 - Permissions list is identical to the snapshot (diff the JSON). Report any difference loudly.
 - Comment count is unchanged versus the snapshot. If any comment was lost or orphaned, say so and point at the saved snapshot.
 - Write the sidecar with the new version, md5, modifiedTime, syncedAt and local md5.

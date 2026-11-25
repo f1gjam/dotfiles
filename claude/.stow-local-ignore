@@ -48,3 +48,4 @@ claude/.claude/skills/aws-well-architected-review/
 claude/.claude/skills/launch-with-aws/
 claude/.claude/skills/ocr-document-processing-skill/
 claude/.claude/skills/signing-in-to-aws/
+claude/.claude/skills/aws.*

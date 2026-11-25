@@ -11,4 +11,6 @@ Rules for writing Markdown that looks the same in Google Drive / Google Docs as 
 - Images embedded as reference-style base64, with full-resolution PNG masters kept next to the document.
 - Lint checks to run before every upload, and how to spot a Google-exported file.
 
+**Needs:** nothing to install. The lint checks use `python3`, `sed` and `base64`, which come with macOS and Homebrew. To upload the result to Drive, see the prerequisites in the `gdrive-sync` README.
+
 **Writes:** nothing on its own. It shapes the Markdown Claude writes. Uploading is done by `gdrive-sync`.

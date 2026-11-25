@@ -14,6 +14,10 @@ Runs `scripts/mdcheck.py` on one or more `.md` files and lists each problem as `
 - any HTML or `~~` in files meant for Slack or Google (`--slack`)
 - digits glued to a word, and unclosed code fences
 
+## Needs
+
+Python 3 (`python3 --version`), which comes with macOS and Homebrew. No packages to install: the script uses only the standard library.
+
 ## How to run
 
 ```bash
