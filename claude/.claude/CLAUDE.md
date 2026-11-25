@@ -43,6 +43,7 @@
 ## Skills and their docs
 
 - Every skill (global or project) has a `README.md` in its folder beside `SKILL.md`: what it does, how to run it, inputs, outputs, and whether it writes anywhere (Jira, Drive, files).
+- Every skill `README.md` also has a **Needs** section: what must be installed (with the install command, e.g. `brew install ...`, and a check command such as `tool --version`), what must be signed in or connected (gcloud, an MCP server, a CLI login), and any input file to download first. If nothing is needed beyond what macOS and Homebrew provide, say "nothing to install". Keep it in sync when the skill's commands change.
 - When creating a skill, write its `README.md` in the same step.
 - When changing a skill (new or existing), update in the same step everything that describes it: its `README.md`, any `CLAUDE.md` that mentions it (project, parent folders, global), and any README that lists it (the folder README, `~/.claude/README.md`, `~/dotfiles/README.md`). Search for the skill's name to find them.
 - Global skills and docs hold nothing company-specific. Company skills and rules go in the company's folders.
