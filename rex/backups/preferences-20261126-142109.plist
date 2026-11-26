@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSWindow Frame Workspace</key>
+	<string>0 0 1809 2130 0 0 7680 2130 </string>
+	<key>NSWindow Frame com_apple_SwiftUI_Settings_window</key>
+	<string>2709 231 900 1059 0 0 7680 2130 </string>
+	<key>NSWindow Frame session-AppWindow-1</key>
+	<string>0 0 1809 2130 0 0 7680 2130 </string>
+	<key>Onboarding.firstRun</key>
+	<string>done</string>
+	<key>RexSync.servers</key>
+	<data>
+	eyJmb3JtYXRWZXJzaW9uIjoxLCJyZWNvcmRzIjpbXX0=
+	</data>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUHasLaunchedBefore</key>
+	<true/>
+	<key>SUScheduledCheckInterval</key>
+	<real>86400</real>
+	<key>SUUpdateGroupIdentifier</key>
+	<integer>3349182219</integer>
+	<key>Shortcuts.newSessionSwapPrompt</key>
+	<string>asked</string>
+	<key>Workspace.activePaneBorderOpacity</key>
+	<real>1</real>
+	<key>Workspace.activityGrouping</key>
+	<string>priority</string>
+	<key>Workspace.activityGroupingResetToPriority</key>
+	<true/>
+	<key>Workspace.appearance</key>
+	<string>dark</string>
+	<key>Workspace.balancesSplitsOnCreation</key>
+	<true/>
+	<key>Workspace.darkThemeID</key>
+	<string>merino-dark</string>
+	<key>Workspace.focusFollowsMouse</key>
+	<false/>
+	<key>Workspace.inactivePaneFadeMode</key>
+	<string>both</string>
+	<key>Workspace.lightThemeID</key>
+	<string>merino-light</string>
+	<key>Workspace.paneDensity</key>
+	<string>comfortable</string>
+	<key>Workspace.showsActivePaneBorder</key>
+	<true/>
+	<key>Workspace.sidebarCollapsed</key>
+	<false/>
+	<key>Workspace.tabBarEdge</key>
+	<string>top</string>
+	<key>Workspace.tabIconTintMode</key>
+	<string>off</string>
+	<key>Workspace.tabStyle</key>
+	<string>horizontal</string>
+	<key>Workspace.tabsFillAvailableSpace</key>
+	<false/>
+	<key>Workspace.terminalCursorBlinkIntervalMilliseconds</key>
+	<integer>500</integer>
+	<key>Workspace.terminalCursorBlinkUsesCustomInterval</key>
+	<false/>
+	<key>Workspace.terminalFontName</key>
+	<string>Menlo</string>
+	<key>Workspace.terminalFontPointSize</key>
+	<real>12</real>
+	<key>Workspace.terminalPaddingX</key>
+	<real>10</real>
+	<key>Workspace.terminalPaddingY</key>
+	<real>6</real>
+	<key>Workspace.usesStandardInactiveWindowPaneStyles</key>
+	<true/>
+	<key>rex.agents.names-sessions</key>
+	<false/>
+	<key>rex.server.automatic-restart-enabled</key>
+	<true/>
+	<key>rex.server.block-plugin-reload-enabled</key>
+	<false/>
+	<key>rex.server.run-mode</key>
+	<string>bundled</string>
+	<key>rex.server.web-client-origin-patterns</key>
+	<array>
+		<string>https://rex.superlogical.com</string>
+	</array>
+	<key>rex.sync.hosts-migrated.v1</key>
+	<true/>
+</dict>
+</plist>

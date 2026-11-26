@@ -1,0 +1,25 @@
+# Replaces Stow's default ignore list, so the defaults are repeated here.
+# http://www.gnu.org/software/stow/manual/html_node/Types-And-Syntax-Of-Ignore-Lists.html
+
+RCS
+.+,v
+CVS
+\.\#.+
+\.cvsignore
+\.svn
+_darcs
+\.hg
+\.git
+\.gitignore
+\.gitmodules
+.+~
+\#.*\#
+^/README.*
+^/LICENSE.*
+^/COPYING
+
+# Rex preferences backup and restore: run by hand, never linked into $HOME.
+# See rex/README.md.
+^/backup_rex_ui_settings\.sh
+^/restore_rex_ui_settings\.sh
+^/backups

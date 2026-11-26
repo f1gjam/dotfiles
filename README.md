@@ -18,7 +18,7 @@ Each top-level folder is a stow **package**. Inside a package, the layout mirror
 | `git`       | `~/.gitconfig`, `~/.gitignore` (needs `.stow-local-ignore`, see notes) |
 | `nano`      | `~/.nanorc`                                   |
 | `osx`       | `~/.osx` (macOS defaults script, run manually)|
-| `rex`       | `~/.config/rex/init.lua` (Rex terminal key bindings; the `rex` skill lives in the `claude` package) |
+| `rex`       | `~/.config/rex/init.lua` (Rex terminal key bindings; the `rex` skill lives in the `claude` package). Also holds `backup_rex_ui_settings.sh`, `restore_rex_ui_settings.sh` and `backups/` (Rex app preferences backup and restore), which are not linked, see notes. |
 | `ssh`       | `~/.ssh/config`                               |
 | `starship`  | `~/.config/starship.toml`                     |
 
@@ -168,6 +168,13 @@ cd ~/dotfiles && stow -v tmux
 - `~/.copilot/settings.json` is not tracked. The Copilot CLI rewrites it,
   which would replace a stowed link. The settings to recreate are listed in
   `copilot/.copilot/README.md`.
+- `rex/backup_rex_ui_settings.sh` exports the Rex app preferences
+  (`com.superlogical.rex`) to a new timestamped file in `rex/backups/`. Run it
+  by hand, then commit the file.
+  `rex/restore_rex_ui_settings.sh FILE` imports the one file you name (no
+  default; run it outside Rex; manual steps are in `rex/README.md`).
+  `rex/.stow-local-ignore` stops Stow linking these files and the README into
+  `$HOME`.
 - Nothing company-specific belongs in this repo. Company rules and skills are
   kept outside it.
 - `ssh` may need `--adopt` if `~/.ssh/config` already exists. Keep key files
