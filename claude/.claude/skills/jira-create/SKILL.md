@@ -1,6 +1,6 @@
 ---
 name: jira-create
-description: Create a Jira issue by asking the user for the details (project, assignee, parent epic, status, description, acceptance criteria), writing a title from the description, checking all text for spelling and grammar, and showing the draft for approval before creating it with the Atlassian MCP server. Use when the user asks to create, raise, open or log a Jira ticket, issue, task or story.
+description: Create a Jira issue by asking the user for the details (project, assignee, parent epic, status, description, acceptance criteria), writing a title from the description, checking all text for spelling and grammar, capturing a cost estimate and an approval-before-work criterion whenever the work may incur cost (infrastructure, AWS, Databricks and similar), and showing the draft for approval before creating it with the Atlassian MCP server. Use when the user asks to create, raise, open or log a Jira ticket, issue, task or story.
 ---
 
 # jira-create
@@ -13,6 +13,7 @@ Creates one Jira issue with the Atlassian MCP server, as whoever is signed in to
 - **Follow the project and company rules.** Before creating, read any `CLAUDE.md` in the working folder and its parents for Jira rules: site and `cloudId`, default project, required components or labels, board rules, team names. Those rules win over the defaults here.
 - **Never invent facts.** No made-up owners, dates, numbers, epics or scope. If the description needs a fact you don't have, ask.
 - **Rewording keeps meaning.** Fix spelling, grammar and clarity. Don't add requirements or scope the user didn't give.
+- **Cost check on every ticket.** If the work may incur cost (infrastructure, cloud such as AWS, Databricks, licences, SaaS, data storage, data transfer, compute, extra environments or similar), the ticket must carry a cost estimate, a clear cost warning in the description, and an acceptance criterion that the costs are approved before work starts (see "Cost impact" in step 3). **Work this out yourself, don't ask the user whether it costs money or what it costs.** Read the description and decide from what the work does (new or bigger resources, more data stored or copied, more requests or compute, extra environments, new licences, retention or versioning changes). Then get the estimate yourself (see "Rules for the estimate" in step 3). Ask the user only for a figure that no source can give you. If the work genuinely has no cost, write "No cost expected" with a one-line reason in the draft.
 
 ## Steps
 
@@ -54,9 +55,35 @@ Creates one Jira issue with the Atlassian MCP server, as whoever is signed in to
      - <testable statement>
      ```
 
+   - **Cost impact (when the work may incur cost).** Put this section straight after the first description paragraph, before the acceptance criteria, so it can't be missed:
+
+     ```markdown
+     ## Cost impact: DO NOT START until costs are approved
+
+     **Estimated cost:** <one-off USD X, recurring USD Y a month, or a range>. This is an estimate, not a quote.
+
+     | Item | Basis and assumptions | One-off | Monthly |
+     | ---- | --------------------- | ------- | ------- |
+     | <resource or action> | <unit price, quantity, size, region, duration> | USD <n> | USD <n> |
+
+     <one line on what drives the cost up, for example data volume, request count, retention, number of environments>
+     ```
+
+     Rules for the estimate:
+     - **Get the numbers yourself, and never invent them.**
+       - Quantities and sizes: read them from the real system with read-only calls (for example CloudWatch bucket sizes and object counts, resource lists and counts through the AWS tools or CLI, Databricks usage or cluster details), or from the repo, the ticket or the export you were given.
+       - Unit prices: use the published list price (for example the AWS pricing documentation through the AWS tools, or the Databricks pricing page), and note the region and date.
+       - Multiply them out in the table, and show the unit price and quantity so anyone can check it.
+       - If a source can't be reached or a figure doesn't exist anywhere, write "not estimated: needs" plus the missing figure in that row, say what you tried, and only then ask the user. Don't leave a blank or a guess.
+     - Cover **one-off and recurring** cost, and anything that grows over time (storage, retention, data transfer, requests, DBUs, extra copies or versions).
+     - Say whether it is a new cost or a change to an existing one, and the account or workspace it lands in.
+     - Give a range when the quantity is uncertain, and say which assumption moves it.
+     - Make the first acceptance criterion: `Costs reviewed and approved by <approver, or "the ticket owner" if the user named nobody> before any work starts; approval and the agreed amount recorded as a comment on this ticket`. Don't invent an approver's name.
+     - If the work is split into phases with different costs, give one row per phase.
+
    - **Check every piece of text** (title, description, criteria, labels): spelling, grammar, punctuation, consistent tense, consistent names for teams and systems. Keep proper nouns and product names exactly as the user writes them unless clearly misspelled; if unsure, ask.
 
-4. **Show the draft and get approval.** Print project, issue type, title, assignee, epic, status, priority, labels, components and the full description. List any wording changes that might alter meaning. Then ask with `AskUserQuestion`: "Create this ticket?" with options "Yes, create it" and "Change something" (the user types the change through "Other" or in notes). Apply edits and show the draft again if they were large.
+4. **Show the draft and get approval.** Print project, issue type, title, assignee, epic, status, priority, labels, components and the full description. Show the cost verdict on its own line first ("Cost: estimated USD X one-off, USD Y a month, approval required before work starts" or "Cost: none expected" plus a one-line reason), say where the figures came from, and flag any row marked "not estimated". List any wording changes that might alter meaning. Then ask with `AskUserQuestion`: "Create this ticket?" with options "Yes, create it" and "Change something" (the user types the change through "Other" or in notes). Apply edits and show the draft again if they were large.
 
 5. **Create the issue** with `createJiraIssue`: `cloudId`, `projectKey`, `issueType`, `summary`, `description`, `assignee` (accountId), `parent` (epic key, if any), `priority`, `labels`, and any required fields from `CLAUDE.md` in `additional_fields` (for example `components`).
 
@@ -64,7 +91,11 @@ Creates one Jira issue with the Atlassian MCP server, as whoever is signed in to
 
 7. **Check it** with `searchJiraIssuesUsingJql` (`key = <KEY>`, fields `summary, status, assignee, parent, components`). Some create calls silently drop fields such as components: if one is missing, add it with `editJiraIssue`, sending the full list.
 
-8. **Report** the key as a link (`https://<site>/browse/<KEY>`), the final title, status, assignee, epic and any required fields that were set.
+8. **Report** the key as a link (`https://<site>/browse/<KEY>`), the final title, status, assignee, epic and any required fields that were set. If the ticket has a cost impact, say so and give the estimate.
+
+## Existing tickets
+
+When the user asks to change a ticket (not create one) and the change adds or reveals cost, apply the same rule: add the "Cost impact" section and the approval criterion to its description, keeping the existing text, and ask before writing as usual.
 
 ## If something fails
 

@@ -22,7 +22,7 @@ Each skill folder has its own `README.md`.
 | [`gdoc-markdown-compat`](skills/gdoc-markdown-compat/README.md) | Rules and lint checks for Markdown that must look right in Google Docs. | No |
 | [`markdown-format-check`](skills/markdown-format-check/README.md) | Checks any Markdown file for formatting mistakes (unescaped `$`, broken bold, bad tables, headings, review spans, HTML left in Slack files). Run after every Markdown edit. | No (read-only) |
 | [`jira-reply-tracker`](skills/jira-reply-tracker/README.md) | Finds Jira tickets where someone is waiting on your reply. | No (read-only) |
-| [`jira-create`](skills/jira-create/README.md) | Creates a Jira issue: asks for assignee, epic, description and acceptance criteria, writes the title, checks spelling and grammar, shows the draft for approval. | Jira, only after you approve the draft |
+| [`jira-create`](skills/jira-create/README.md) | Creates a Jira issue: asks for assignee, epic, description and acceptance criteria, writes the title, checks spelling and grammar, adds a cost estimate and a "costs approved before work starts" criterion when the work may cost money, shows the draft for approval. | Jira, only after you approve the draft |
 | [`graphviz-diagrams`](skills/graphviz-diagrams/README.md) | Makes Graphviz diagrams as a fully commented `.dot` plus a `.png`. | `.dot` and `.png` files only |
 | [`rex`](skills/rex/README.md) | Drives the Rex terminal app through its `rex` CLI: sessions, tabs, panes, running commands, reading output. Needs the `rex` CLI. | No files; Rex commands act on your terminal |
 
