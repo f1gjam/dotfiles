@@ -12,6 +12,7 @@ Creates one Jira issue with the Atlassian MCP server, as whoever is signed in to
 - **Nothing is written to Jira until the user approves the final draft** (step 4). The user asking for a ticket counts as approval only when they gave every detail and said not to ask.
 - **Follow the project and company rules.** Before creating, read any `CLAUDE.md` in the working folder and its parents for Jira rules: site and `cloudId`, default project, required components or labels, board rules, team names. Those rules win over the defaults here.
 - **Never invent facts.** No made-up owners, dates, numbers, epics or scope. If the description needs a fact you don't have, ask.
+- **Acceptance criteria live in the Acceptance Criteria field, not in the description.** Never write an "Acceptance criteria" section into the description.
 - **Rewording keeps meaning.** Fix spelling, grammar and clarity. Don't add requirements or scope the user didn't give.
 - **Cost check on every ticket.** If the work may incur cost (infrastructure, cloud such as AWS, Databricks, licences, SaaS, data storage, data transfer, compute, extra environments or similar), the ticket must carry a cost estimate, a clear cost warning in the description, and an acceptance criterion that the costs are approved before work starts (see "Cost impact" in step 3). **Work this out yourself, don't ask the user whether it costs money or what it costs.** Read the description and decide from what the work does (new or bigger resources, more data stored or copied, more requests or compute, extra environments, new licences, retention or versioning changes). Then get the estimate yourself (see "Rules for the estimate" in step 3). Ask the user only for a figure that no source can give you. If the work genuinely has no cost, write "No cost expected" with a one-line reason in the draft.
 
@@ -48,14 +49,11 @@ Creates one Jira issue with the Atlassian MCP server, as whoever is signed in to
      <one or two sentences on the goal and why>
 
      <bullets for scope, if there is a list>
-
-     ## Acceptance criteria
-
-     - <testable statement>
-     - <testable statement>
      ```
 
-   - **Cost impact (when the work may incur cost).** Put this section straight after the first description paragraph, before the acceptance criteria, so it can't be missed:
+   - **Acceptance criteria go in the Jira "Acceptance Criteria" field, never in the description.** Keep a separate list of the criteria (including the cost-approval one, first) and send it as that field in step 5. The description must not contain an "Acceptance criteria" heading or a copy of the criteria. In the draft (step 4), show the criteria under their own "Acceptance criteria (field)" heading so the user can review them, and make clear they are stored in the field. Write them as a Markdown bullet list, one testable statement per bullet.
+
+   - **Cost impact (when the work may incur cost).** Put this section in the description straight after the first paragraph, so it can't be missed (there is no separate cost field or cost-approval section in Jira: the cost impact stays in the description, and the approval is an ordinary acceptance criterion):
 
      ```markdown
      ## Cost impact: DO NOT START until costs are approved
@@ -78,24 +76,26 @@ Creates one Jira issue with the Atlassian MCP server, as whoever is signed in to
      - Cover **one-off and recurring** cost, and anything that grows over time (storage, retention, data transfer, requests, DBUs, extra copies or versions).
      - Say whether it is a new cost or a change to an existing one, and the account or workspace it lands in.
      - Give a range when the quantity is uncertain, and say which assumption moves it.
-     - Make the first acceptance criterion: `Costs reviewed and approved by <approver, or "the ticket owner" if the user named nobody> before any work starts; approval and the agreed amount recorded as a comment on this ticket`. Don't invent an approver's name.
+     - Make the first item in the Acceptance Criteria field (not in the description) this criterion, so the ticket can't be closed, or started, without the cost approval: `Costs reviewed and approved by <approver, or "the ticket owner" if the user named nobody> before any work starts; approval and the agreed amount recorded as a comment on this ticket`. Don't invent an approver's name.
      - If the work is split into phases with different costs, give one row per phase.
 
    - **Check every piece of text** (title, description, criteria, labels): spelling, grammar, punctuation, consistent tense, consistent names for teams and systems. Keep proper nouns and product names exactly as the user writes them unless clearly misspelled; if unsure, ask.
 
 4. **Show the draft and get approval.** Print project, issue type, title, assignee, epic, status, priority, labels, components and the full description. Show the cost verdict on its own line first ("Cost: estimated USD X one-off, USD Y a month, approval required before work starts" or "Cost: none expected" plus a one-line reason), say where the figures came from, and flag any row marked "not estimated". List any wording changes that might alter meaning. Then ask with `AskUserQuestion`: "Create this ticket?" with options "Yes, create it" and "Change something" (the user types the change through "Other" or in notes). Apply edits and show the draft again if they were large.
 
-5. **Create the issue** with `createJiraIssue`: `cloudId`, `projectKey`, `issueType`, `summary`, `description`, `assignee` (accountId), `parent` (epic key, if any), `priority`, `labels`, and any required fields from `CLAUDE.md` in `additional_fields` (for example `components`).
+5. **Create the issue** with `createJiraIssue`: `cloudId`, `projectKey`, `issueType`, `summary`, `description` (without acceptance criteria), `assignee` (accountId), `parent` (epic key, if any), `priority`, `labels`, and any required fields from `CLAUDE.md` in `additional_fields` (for example `components`).
+
+   **Acceptance criteria field:** the field's id differs per site. Find it once per session: read an existing issue in the project with `getJiraIssue` and `view: full` (or `evidence`) and look for "Acceptance Criteria" under `customFields` (for example `customfield_13230` on one site), or use `discover` ("get create metadata for jira issue type"). Pass the criteria as that field in `additional_fields`. If the field isn't accepted on create, set it straight after with `editJiraIssue`. If the project has no Acceptance Criteria field, tell the user and ask where to put them. Don't fall back to the description without asking.
 
 6. **Set the status** if it isn't the starting one: `transitionJiraIssue` with `transitionName`. If that name fails, get the transitions with `discover` ("list jira issue transitions") and pick the one that leads to the requested status.
 
-7. **Check it** with `searchJiraIssuesUsingJql` (`key = <KEY>`, fields `summary, status, assignee, parent, components`). Some create calls silently drop fields such as components: if one is missing, add it with `editJiraIssue`, sending the full list.
+7. **Check it** with `searchJiraIssuesUsingJql` (`key = <KEY>`, fields `summary, status, assignee, parent, components`), and read the issue with `getJiraIssue` to check the Acceptance Criteria field is filled and the description has no acceptance criteria in it. Some create calls silently drop fields such as components or custom fields: if one is missing, add it with `editJiraIssue` (for components, send the full list).
 
 8. **Report** the key as a link (`https://<site>/browse/<KEY>`), the final title, status, assignee, epic and any required fields that were set. If the ticket has a cost impact, say so and give the estimate.
 
 ## Existing tickets
 
-When the user asks to change a ticket (not create one) and the change adds or reveals cost, apply the same rule: add the "Cost impact" section and the approval criterion to its description, keeping the existing text, and ask before writing as usual.
+When the user asks to change a ticket (not create one) and the change adds or reveals cost, apply the same rule: add the "Cost impact" section to its description and the approval criterion to its Acceptance Criteria field (as the first criterion, keeping the existing ones), keeping all existing text, and ask before writing as usual. If an existing ticket has acceptance criteria written in its description, tell the user and offer to move them into the field.
 
 ## If something fails
 
